@@ -21,7 +21,7 @@
 	}
 
 	var config = $.cookie = function (key, value, options) {
-
+	
 		// write
 		if (value !== undefined) {
 			options = $.extend({}, config.defaults, options);
@@ -29,10 +29,19 @@
 			if (value === null) {
 				options.expires = -1;
 			}
-
-			if (typeof options.expires === 'number') {
-				var days = options.expires, t = options.expires = new Date();
-				t.setDate(t.getDate() + days);
+			
+			var duration = options.expires, t = options.expires = new Date();
+			
+			if (typeof duration === 'number') { //if duration is just number we assume it means days
+				t.setDate(t.getDate() + duration);
+			} else if (typeof duration === 'string') {
+				var durtion_type = duration.charAt(duration.length-1);
+				
+				if (durtion_type === 'm') {
+					t.setMinutes ( t.getMinutes() + parseInt(duration.replace(durtion_type, '')) );
+				} else if (durtion_type === 's') {
+					t.setSeconds ( t.getSeconds() + parseInt(duration.replace(durtion_type, '')) );
+				}
 			}
 
 			value = config.json ? JSON.stringify(value) : String(value);
