@@ -39,6 +39,8 @@
 				
 				if (durtion_type === 'm') {
 					t.setMinutes ( t.getMinutes() + parseInt(duration.replace(durtion_type, '')) );
+				} else if (durtion_type === 'h') {
+					t.setHours ( t.getHours() + parseInt(duration.replace(durtion_type, '')) );
 				} else if (durtion_type === 's') {
 					t.setSeconds ( t.getSeconds() + parseInt(duration.replace(durtion_type, '')) );
 				}
